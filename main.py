@@ -23,19 +23,26 @@ class App:
     def on_cleanup(self):
         pygame.quit()
 
-    def on_execute(self):
-        if self.on_init == False:
-            self.running == False
+    def draw_rect(self):
+        pygame.draw.rect(self._display_surf, (0, 255, 0), (10, 10, 50, 50))
 
+
+    def on_execute(self):
+        if self.on_init() == False:
+            self.running == False
+        
+        
         while (self.running):
-            # for event in pygame.event.get():
-                # self.on_event(event)
+            for event in pygame.event.get():
+                self.on_event(event)
             self.on_loop()
             self.on_render()
-        # self.on_cleanup()
+        self.on_cleanup()
 
 
 
 if __name__ == "__main__":
     app = App()
     app.on_execute()
+    app.draw_rect()
+    
