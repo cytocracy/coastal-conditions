@@ -1,48 +1,28 @@
 import pygame
-from pygame.locals import *
+pygame.init()
 
-class App:
-    def __init__(self):
-        self.running = True
-        self._display_surf = None
-        self.size = self.weight, self.height = 640, 400
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
-    def on_init(self):
-        pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        self._running = True
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 
-    def on_event(self, event):
+screen = pygame.display.set_mode([SCREEN_WIDTH,SCREEN_HEIGHT])
+running = True
+while running:
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            self._running = False
-    
-    def on_loop(self):
-        pass
-    def on_render(self):
-        pass
-    def on_cleanup(self):
-        pygame.quit()
-
-    def draw_rect(self):
-        pygame.draw.rect(self._display_surf, (0, 255, 0), (10, 10, 50, 50))
+            running = False
+    screen.fill((255,255,255))
+    pygame.draw.circle(screen, (0,0,255), (250,250), 75)
+    pygame.display.flip()
 
 
-    def on_execute(self):
-        if self.on_init() == False:
-            self.running == False
-        
-        
-        while (self.running):
-            for event in pygame.event.get():
-                self.on_event(event)
-            self.on_loop()
-            self.on_render()
-        self.on_cleanup()
-
-
-
-if __name__ == "__main__":
-    app = App()
-    app.on_execute()
-    app.draw_rect()
-    
+pygame.quit()
