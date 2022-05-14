@@ -37,10 +37,10 @@ def simulate():
     for i in range(COLS):
         f = 0
         if(i == 0):
-            # f = C*C*(u[i+1] + u[COLS-1] - 2*u[i])/(H*H)
+            # f = C*C*(u[i+1] - u[i])/(H*H)
             pass
         elif(i==COLS-1): 
-            # f = C*C*(u[i-1]+u[0] - 2*u[i])/(H*H)
+            # f = C*C*(u[i-1] - u[i])/(H*H)
             pass
         else:
             f = C*C*(u[i-1] + u[i+1] - 2*u[i])/(H*H)
@@ -58,6 +58,9 @@ while running:
             running = False
         if event.type == pygame.K_SPACE:
             v[3] = 5;
+        if event.type == pygame.K_ESCAPE:
+            for i in range(COLS):
+                v[i] = 0
     screen.fill((255,255,255))
     simulate()
     for i in range(COLS):
