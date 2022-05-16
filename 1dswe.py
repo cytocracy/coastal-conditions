@@ -31,6 +31,9 @@ def update_eta_2D(eta, M, N, dx, dy, dt, nx, ny):
 # Update M field
 @jit(nopython=True) # use Just-In-Time (JIT) Compilation for C-performance
 def update_M_2D(eta, M, N, D, g, h, alpha, dx, dy, dt, nx, ny):
+    N=0
+    dy = 0
+    ny=0
     
     # compute argument 1: M**2/D + 0.5 * g * eta**2
     arg1 = M**2 / D
@@ -203,7 +206,7 @@ def Shallow_water_2D(eta0, M0, N0, h, g, alpha, nt, dx, dy, dt, X, Y):
     return eta, M, N
 
 Lx = 100.0   # width of the mantle in the x direction []
-Ly = 100.0   # thickness of the mantle in the y direction []
+Ly = 10   # thickness of the mantle in the y direction []
 nx = 401     # number of points in the x direction
 ny = 401     # number of points in the y direction
 dx = Lx / (nx - 1)  # grid spacing in the x direction []
@@ -217,10 +220,10 @@ y = numpy.linspace(0.0, Ly, num=ny)
 X, Y = numpy.meshgrid(x,y) # coordinates X,Y required to define eta, h, M, N
 
 # Define constant ocean depth profile h = 50 m
-h = 50 -45 * numpy.tanh((X-70.)/8.)
+h = 50 * numpy.ones_like(X)
 
 # Define initial eta Gaussian distribution [m]
-eta0 = 0.5 * numpy.exp(-((X-50)**2/10)-((Y-50)**2/10))
+eta0 = 0.5 * numpy.exp(-((X-50)**2/10)-((Y-5)**2/10))
 
 # Define initial M and N
 M0 = 100. * eta0
@@ -231,8 +234,8 @@ g = 9.81  # gravity acceleration [m/s^2]
 alpha = 0.025 # friction coefficient for natural channels in good condition
 
 # Maximum wave propagation time [s]
-Tmax = 3.
-dt = 1/8000.
+Tmax = 6.
+dt = 1/4500.
 nt = (int)(Tmax/dt)
 
 # Compute eta, M, N fields
