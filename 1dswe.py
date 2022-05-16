@@ -54,6 +54,7 @@ def update_M_2D(eta, M, N, D, g, h, alpha, dx, dy, dt, nx, ny):
             detadx = (eta[j,i+1] - eta[j,i-1]) / (2. * dx)
             
             # update M field using leap-frog method
+            # M[j, i] = 0.
             M[j, i] = M[j, i] - dt * (darg1dx + darg2dy + g * D[j,i] * detadx + fric[j,i])
             
     return M           
@@ -81,7 +82,8 @@ def update_N_2D(eta, M, N, D, g, h, alpha, dx, dy, dt, nx, ny):
             detady = (eta[j+1,i] - eta[j-1,i]) / (2. * dy)
             
             # update N field using leap-frog method
-            N[j, i] = N[j, i] - dt * (darg1dx + darg2dy + g * D[j,i] * detady + fric[j,i])
+            N[j, i] = 0.
+            # N[j, i] = N[j, i] - dt * (darg1dx + darg2dy + g * D[j,i] * detady + fric[j,i])
                         
     return N          
 
@@ -208,7 +210,7 @@ def Shallow_water_2D(eta0, M0, N0, h, g, alpha, nt, dx, dy, dt, X, Y):
 Lx = 100.0   # width of the mantle in the x direction []
 Ly = 10   # thickness of the mantle in the y direction []
 nx = 401     # number of points in the x direction
-ny = 401     # number of points in the y direction
+ny = int(401/10)     # number of points in the y direction
 dx = Lx / (nx - 1)  # grid spacing in the x direction []
 dy = Ly / (ny - 1)  # grid spacing in the y direction []
 
