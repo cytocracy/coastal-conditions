@@ -14,7 +14,7 @@ DAM_PARTICLES = 100
 G = [0.0, -9.8]
 REST_DENS = 300.0
 GAS_CONST = 2000.0
-H = 16.0
+H = 16
 HSQ = H * H
 MASS = 2.5
 VISC = 200.0
@@ -24,7 +24,7 @@ POLY6 = 4.0 / (math.pi * pow(H, 8.0))
 SPIKY_GRAD = -10.0 / (math.pi * pow(H, 5.0))
 VISC_LAP = 40.0 / (math.pi * pow(H, 5.0))
 
-EPS = H
+EPS = int(H)
 BOUND_DAMPING = -0.5
 
 particles = []
@@ -47,8 +47,8 @@ def init_gl():
 
 def init_sph():
     
-    for y in range(EPS, VIEW_HEIGHT - EPS * 2.0, H):
-        for x in range(VIEW_WIDTH / 4, VIEW_WIDTH /2, H):
+    for y in range(EPS, VIEW_HEIGHT - EPS * 2, H):
+        for x in range(int(VIEW_WIDTH / 4), int(VIEW_WIDTH /2), H):
             if len(particles) < DAM_PARTICLES:
                 jitter = random.uniform(-.2, .2)
                 particles.append(Particle(x + jitter, y))
@@ -101,7 +101,7 @@ def integrate():
 
 
 
-def Render():
+def render():
     glClear(GL_COLOR_BUFFER_BIT)
     glLoadIdentity()
     glOrtho(0, VIEW_WIDTH, 0, VIEW_HEIGHT, 0, 1)
@@ -124,5 +124,16 @@ if __name__ == '__main__':
     pygame.init()
     display = (VIEW_WIDTH, VIEW_HEIGHT)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    init_gl()
+    init_sph()
+    render()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+    
+    
 
     
