@@ -1,28 +1,53 @@
 import pygame
-pygame.init()
+from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
+from OpenGL.GLUT import *
+import numpy
 
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT,
-)
+VIEW_WIDTH = 800
+VIEW_HEIGHT = 600
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
-screen = pygame.display.set_mode([SCREEN_WIDTH,SCREEN_HEIGHT])
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.fill((255,255,255))
-    pygame.draw.circle(screen, (0,0,255), (250,450), 75)
-    pygame.display.flip()
+class Particle:
+    def __init__(self, x, y):
+        self.pos = [x, y]
+        self.vel = [0, 0]
+        self.force = [0, 0]
+        self.rho = 0
+        self.prs = 0
+    # vector = numpy.linalg.
 
 
-pygame.quit()
+def init_gl():
+    glClearColor(0.9, 0.9, 0.9, 1.)
+    glEnable(GL_POINT_SMOOTH)
+    glPointSize(H/2.0)
+    glMatrixMode(GL_PROJECTION)
+
+
+def Render():
+    glClear(GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glOrtho(0, VIEW_WIDTH, 0, VIEW_HEIGHT, 0, 1)
+    glColor4f(0.2, 0.6, 1.0, 1)
+    glBegin(GL_POINTS)
+    for p in particles:
+        glVertex2f(p.x(0), p.x(1))
+    glEnd()
+
+    glutSwapBuffers()
+
+def update():
+    # compute_density_pressure()
+    # compute_forces()
+    # integrate()
+
+    # glutPostRedisplay()
+    pass
+
+# def main():
+#     pygame.init()
+#     display = (VIEW_WIDTH, VIEW_HEIGHT)
+#     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+    
