@@ -1,3 +1,3 @@
 # coastal-conditions
 
-A 1d implementation of Shallow Water Equations, solved numerically and plotted via Matplot.
+A particle implementation of SPH using openGL and Pygame.
